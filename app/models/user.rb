@@ -15,7 +15,7 @@ class User < ApplicationRecord
       return
     end
     username, domain = email_string.split("@")
-    if username.blank? || domain_name.blank?
+    if username.blank? || domain.blank?
       errors.add(:email, "not in correct format ")
       return
     end

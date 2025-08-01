@@ -10,17 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_01_111646) do
-  create_table "comments", force: :cascade do |t|
-    t.string "body"
-    t.integer "user_id_id", null: false
-    t.integer "ticket_id_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["ticket_id_id"], name: "index_comments_on_ticket_id_id"
-    t.index ["user_id_id"], name: "index_comments_on_user_id_id"
-  end
-
+ActiveRecord::Schema[7.2].define(version: 2025_08_01_111326) do
   create_table "ticket_histories", force: :cascade do |t|
     t.integer "ticket_id_id", null: false
     t.integer "user_id_id", null: false
@@ -34,9 +24,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_01_111646) do
   end
 
   create_table "tickets", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.text "description"
-    t.string "status"
+    t.integer "status", null: false
     t.integer "creator_id"
     t.integer "developer_id"
     t.integer "qa_id"
@@ -61,8 +51,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_01_111646) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "comments", "tickets", column: "ticket_id_id"
-  add_foreign_key "comments", "users", column: "user_id_id"
   add_foreign_key "ticket_histories", "ticket_ids"
   add_foreign_key "ticket_histories", "user_ids"
   add_foreign_key "tickets", "users", column: "creator_id"
