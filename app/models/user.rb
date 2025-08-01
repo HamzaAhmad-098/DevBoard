@@ -3,15 +3,11 @@ class User < ApplicationRecord
   has_many :created_tickets, class_name: "Ticket", foreign_key: "creator"
   has_many :developed_tickets, class_name: "Ticket", foreign_key: "developer"
   has_many :qa_tickets, class_name: "Ticket", foreign_key: "qa"
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+
   validates :name , presence: true
   validates :email ,presence: true , uniqueness:true
   validates :role ,presence: true
   validate :email_is_in_correct_format
-  
   def email_is_in_correct_format
     email_string = self.email.to_s.strip
     if email_string.count('@') !=1
