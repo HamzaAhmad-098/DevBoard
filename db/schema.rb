@@ -10,13 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_01_111326) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_01_144848) do
+  create_table "comments", force: :cascade do |t|
+    t.string "body", null: false
+    t.integer "user_id_id", null: false
+    t.integer "ticket_id_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ticket_id_id"], name: "index_comments_on_ticket_id_id"
+    t.index ["user_id_id"], name: "index_comments_on_user_id_id"
+  end
+
   create_table "ticket_histories", force: :cascade do |t|
     t.integer "ticket_id_id", null: false
     t.integer "user_id_id", null: false
-    t.string "action"
-    t.string "old_value"
-    t.string "new_value"
+    t.string "action", null: false
+    t.string "old_value", null: false
+    t.string "new_value", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["ticket_id_id"], name: "index_ticket_histories_on_ticket_id_id"
@@ -38,21 +48,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_01_111326) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "password", null: false
+    t.integer "role", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name"
-    t.integer "role"
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "ticket_histories", "ticket_ids"
-  add_foreign_key "ticket_histories", "user_ids"
+  add_foreign_key "comments", "tickets", column: "ticket_id_id"
+  add_foreign_key "comments", "users", column: "user_id_id"
+  add_foreign_key "ticket_histories", "tickets", column: "ticket_id_id"
+  add_foreign_key "ticket_histories", "users", column: "user_id_id"
   add_foreign_key "tickets", "users", column: "creator_id"
   add_foreign_key "tickets", "users", column: "developer_id"
   add_foreign_key "tickets", "users", column: "qa_id"
