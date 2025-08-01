@@ -3,4 +3,6 @@ class Ticket < ApplicationRecord
   belongs_to :creator, class_name: "User"
   belongs_to :developer, class_name: "User"
   belongs_to :qa,class_name: "User"
+  validates :title , presence: true ,length: {minimum: 5}
+  validates :status, presence: true
 end
