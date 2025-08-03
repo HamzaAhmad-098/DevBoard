@@ -13,24 +13,24 @@
 ActiveRecord::Schema[7.2].define(version: 2025_08_01_144848) do
   create_table "comments", force: :cascade do |t|
     t.string "body", null: false
-    t.integer "user_id_id", null: false
-    t.integer "ticket_id_id", null: false
+    t.integer "user_id", null: false
+    t.integer "ticket_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["ticket_id_id"], name: "index_comments_on_ticket_id_id"
-    t.index ["user_id_id"], name: "index_comments_on_user_id_id"
+    t.index ["ticket_id"], name: "index_comments_on_ticket_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "ticket_histories", force: :cascade do |t|
-    t.integer "ticket_id_id", null: false
-    t.integer "user_id_id", null: false
+    t.integer "ticket_id", null: false
+    t.integer "user_id", null: false
     t.string "action", null: false
     t.string "old_value", null: false
     t.string "new_value", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["ticket_id_id"], name: "index_ticket_histories_on_ticket_id_id"
-    t.index ["user_id_id"], name: "index_ticket_histories_on_user_id_id"
+    t.index ["ticket_id"], name: "index_ticket_histories_on_ticket_id"
+    t.index ["user_id"], name: "index_ticket_histories_on_user_id"
   end
 
   create_table "tickets", force: :cascade do |t|
@@ -56,10 +56,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_01_144848) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "comments", "tickets", column: "ticket_id_id"
-  add_foreign_key "comments", "users", column: "user_id_id"
-  add_foreign_key "ticket_histories", "tickets", column: "ticket_id_id"
-  add_foreign_key "ticket_histories", "users", column: "user_id_id"
+  add_foreign_key "comments", "tickets"
+  add_foreign_key "comments", "users"
+  add_foreign_key "ticket_histories", "tickets"
+  add_foreign_key "ticket_histories", "users"
   add_foreign_key "tickets", "users", column: "creator_id"
   add_foreign_key "tickets", "users", column: "developer_id"
   add_foreign_key "tickets", "users", column: "qa_id"

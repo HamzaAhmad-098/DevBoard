@@ -6,7 +6,7 @@ class CreateUsers < ActiveRecord::Migration[7.2]
       t.string :password, null: false
       t.integer :role, null: false
 
-      t.timestamps null: false
+      t.timestamps 
     end
   end
 end

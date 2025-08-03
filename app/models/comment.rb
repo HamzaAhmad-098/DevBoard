@@ -1,5 +1,5 @@
 class Comment < ApplicationRecord
-  belongs_to :user, class_name: "User"
-  belongs_to :ticket, class_name: "Ticket"
-  validates :content, presence: true, length: { minimum: 10 }
+  belongs_to :user
+  belongs_to :ticket
+  validates :body, presence: true
 end
