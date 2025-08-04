@@ -1,5 +1,13 @@
 class User < ApplicationRecord
-  
+
+ after_initialize :set_default_role, if: :new_record?
+
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+        #  :recoverable,
+         :rememberable, :validatable
+
   enum role: { user: 0, developer: 1, qa: 2, admin: 3 }
 
   has_many :created_tickets, foreign_key: "creator"
@@ -10,6 +18,10 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :role, presence: true
   validate :email_is_in_correct_format
+
+  def set_default_role
+    self.role ||= :user
+  end
 
   private
   def email_is_in_correct_format
