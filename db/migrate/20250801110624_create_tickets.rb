@@ -8,7 +8,7 @@ class CreateTickets < ActiveRecord::Migration[7.2]
       t.references :developer, foreign_key: { to_table: :users }
       t.references :qa, foreign_key: { to_table: :users }
 
-      t.timestamps 
+      t.timestamps
     end
   end
 end

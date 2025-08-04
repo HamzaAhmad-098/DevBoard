@@ -1,23 +1,23 @@
 class User < ApplicationRecord
-  #enums
-  
+  # enums
+
   enum role: { user: 0, developer: 1, qa: 2, admin: 3 }
-  
-  #associations
-  
+
+  # associations
+
   has_many :created_tickets, foreign_key: "creator"
   has_many :developed_tickets, foreign_key: "developer"
   has_many :qa_tickets, foreign_key: "qa"
-  
-  #Validations
-  
+
+  # Validations
+
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
   validates :role, presence: true
   validate :email_is_in_correct_format
-  
-  private 
-  
+
+  private
+
   def email_is_in_correct_format
     email_string = self.email.to_s.strip
     if email_string.count("@") !=1
