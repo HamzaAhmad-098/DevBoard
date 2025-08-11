@@ -27,6 +27,9 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "solid_cache"
 gem "solid_queue"
 gem "solid_cable"
+gem "devise"
+gem "tailwindcss-rails"
+
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -61,3 +64,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "jsbundling-rails", "~> 1.3"

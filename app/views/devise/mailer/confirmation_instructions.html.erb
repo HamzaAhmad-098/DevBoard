@@ -1,0 +1,12 @@
+<p>Hello <strong><%= @email %></strong>,</p>
+
+<p>Thank you for signing up! To activate your account and complete your registration, please confirm your email address by clicking the button below:</p>
+
+<p>
+  <%= link_to 'Confirm My Account', confirmation_url(@resource, confirmation_token: @token), style: "display:inline-block; padding:10px 20px; background-color:#007bff; color:#fff; text-decoration:none; border-radius:5px;" %>
+</p>
+
+<p>If you did not create this account, you can safely ignore this email.</p>
+
+<p>Best regards,<br>
+The <%= Rails.application.class.module_parent_name %> Team</p>
