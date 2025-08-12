@@ -1,18 +1,26 @@
 class TicketPolicy < ApplicationPolicy
   def index?
-    user.admin? || user.user? || user.developer? || user.qa?
+    true
+  end
+
+  def show?
+    return true if user.admin?
+    return true if user.user? && record.creator_id == user.id
+    return true if user.developer? && record.developer_id == user.id
+    return true if user.qa? && record.qa_id == user.id
+    false
   end
 
   def create?
-    user.user? || user.admin?
+    user.admin? || user.user?
   end
 
   def update?
-    (user.developer? && record.developer_id == user.id) || user.admin?
-  end
-
-  def verify?
-    user.qa? || user.admin?
+    return true if user.admin?
+    return true if user.user? && record.creator_id == user.id
+    return true if user.developer? && record.developer_id == user.id
+    return true if user.qa? && record.qa_id == user.id && record.status != "done"
+    false
   end
 
   def destroy?

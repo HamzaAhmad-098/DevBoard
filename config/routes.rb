@@ -11,11 +11,7 @@ end
   get 'dashboard/qa', to: 'dashboards#qa', as: :qa_dashboard
   get 'dashboard/admin', to: 'dashboards#admin', as: :admin_dashboard
 
-  resources :tickets do
-  member do
-    patch :verify
-  end
-end
+  resources :tickets 
   resources :users
   root "home#index"
 end

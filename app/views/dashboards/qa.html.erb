@@ -1,6 +1,6 @@
 <% content_for :title, "QA Dashboard" %>
 
-<h1 class="text-3xl font-bold mb-4">Tickets to Verify</h1>
+<h1 class="text-3xl font-bold mb-4">Tickets Assigned to Me</h1>
 
 <div class="space-y-4">
   <% @tickets.each do |ticket| %>
@@ -10,7 +10,7 @@
         <p class="text-sm text-gray-400">Status: <%= ticket.status %></p>
       </div>
       <div class="flex space-x-2">
-        <%= link_to "Verify", verify_ticket_path(ticket), class: "bg-green-600 px-3 py-1 rounded hover:bg-green-500" %>
+        <%= link_to "Update Status", edit_ticket_path(ticket), class: "bg-yellow-600 px-3 py-1 rounded hover:bg-yellow-500" %>
       </div>
     </div>
   <% end %>

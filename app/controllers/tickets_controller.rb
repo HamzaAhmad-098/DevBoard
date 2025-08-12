@@ -10,7 +10,7 @@ class TicketsController < ApplicationController
     when "developer"
       @tickets = current_user.developed_tickets
     when "qa"
-      @tickets = current_user.qa_tickets
+      @tickets = current_user.qa_tickets.where(status: :ready_for_qa)
     when "admin"
       @tickets = Ticket.all
     else
@@ -34,7 +34,7 @@ def create
   end
 
   if @ticket.save
-    redirect_to tickets_path, notice: "Ticket created successfully."
+    redirect_to after_ticket_update_path, notice: "Ticket created successfully."
   else
     render :new, status: :unprocessable_entity
   end
@@ -47,13 +47,17 @@ def update
   if current_user.admin?
     # Admin can update everything including status, developer_id, qa_id
     permitted_params = params.require(:ticket).permit(:title, :description, :status, :developer_id, :qa_id)
+  elsif current_user.developer?
+    permitted_params = params.require(:ticket).permit(:title ,:description , :status , :qa)
+  elsif current_user.qa?
+    permitted_params = params.require(:ticket).permit(:title ,:description , :status )
   else
     # Other users can update only allowed fields (e.g. maybe just description)
     permitted_params = params.require(:ticket).permit(:title, :description)
   end
 
   if @ticket.update(permitted_params)
-    redirect_to tickets_path, notice: "Ticket updated successfully."
+    redirect_to after_ticket_update_path, notice: "Ticket updated successfully."
   else
     render :edit, status: :unprocessable_entity
   end
@@ -61,7 +65,7 @@ end
 
   def destroy
     @ticket.destroy
-    redirect_to tickets_path, notice: "Ticket deleted successfully."
+    redirect_to after_ticket_update_path, notice: "Ticket deleted successfully."
   end
 
   private
@@ -73,15 +77,19 @@ end
   def ticket_params
     params.require(:ticket).permit(:title, :description, :status, :developer_id, :qa_id)
   end
-  def verify
-  @ticket = Ticket.find(params[:id])
-  authorize @ticket, :verify?
+private
 
-  if @ticket.update(status: :verified) # or whatever your verified status is called
-    redirect_to tickets_path, notice: "Ticket verified successfully."
+def after_ticket_update_path
+  case current_user.role
+  when "admin"
+    admin_dashboard_path
+  when "developer"
+    developer_dashboard_path
+  when "qa"
+    qa_dashboard_path
   else
-    redirect_to tickets_path, alert: "Failed to verify ticket."
+    user_dashboard_path
   end
 end
-
 end
+

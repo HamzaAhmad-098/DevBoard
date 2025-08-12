@@ -25,16 +25,18 @@
       <%= form.label :status, class: "block text-gray-300" %>
       <%= form.select :status, Ticket.statuses.keys.map { |s| [s.humanize, s] }, {}, class: "w-full rounded border-gray-700 bg-gray-800 text-white" %>
     </div>
-
+    <% if current_user.admin? %>
     <div>
       <%= form.label :developer_id, "Assign Developer", class: "block text-gray-300" %>
       <%= form.collection_select :developer_id, User.developer, :id, :name, include_blank: true, class: "w-full rounded border-gray-700 bg-gray-800 text-white" %>
     </div>
-
+    <% end %>
+    <% if current_user.admin? || current_user.developer? %>
     <div>
       <%= form.label :qa_id, "Assign QA", class: "block text-gray-300" %>
       <%= form.collection_select :qa_id, User.qa, :id, :name, include_blank: true, class: "w-full rounded border-gray-700 bg-gray-800 text-white" %>
     </div>
+    <% end %>
   <% end %>
 
   <div>

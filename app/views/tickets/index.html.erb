@@ -7,7 +7,7 @@
 
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl">Tickets</h1>
-    <% if policy(Ticket).create? %>
+    <% if policy(Ticket).create? && !current_user.developer? %>
       <%= link_to "New ticket", new_ticket_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
     <% end %>
   </div>
@@ -17,19 +17,29 @@
       <% @tickets.each do |ticket| %>
         <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
           <%= render ticket %>
+
           <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
-            <%= link_to "Show", ticket, class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+            <% if current_user.developer? %>
+              <!-- Developer can only change status and assign QA -->
+              <%= form_with(model: ticket, url: ticket_path(ticket), method: :patch, local: true) do |f| %>
+                <%= f.select :status, Ticket.statuses.keys.map { |s| [s.humanize, s] }, {}, class: "rounded bg-gray-700 text-white px-2 py-1" %>
 
-            <% if policy(ticket).update? %>
-              <%= link_to "Edit", edit_ticket_path(ticket), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <% end %>
+                <%= f.collection_select :qa_id, User.where(role: :qa), :id, :name, { include_blank: "Select QA" }, class: "rounded bg-gray-700 text-white px-2 py-1" %>
 
-            <% if policy(ticket).verify? %>
-              <%= link_to "Verify", verify_ticket_path(ticket), method: :patch, class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-yellow-500 hover:bg-yellow-400 text-white inline-block font-medium" %>
-            <% end %>
+                <%= f.submit "Update", class: "bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded" %>
+              <% end %>
 
-            <% if policy(ticket).destroy? %>
-              <%= button_to "Destroy", ticket, method: :delete, class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+            <% else %>
+              <!-- Normal view for other roles -->
+              <%= link_to "Show", ticket, class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+
+              <% if policy(ticket).update? %>
+                <%= link_to "Edit", edit_ticket_path(ticket), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+              <% end %>
+
+              <% if policy(ticket).destroy? %>
+                <%= button_to "Destroy", ticket, method: :delete, class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+              <% end %>
             <% end %>
           </div>
         </div>
