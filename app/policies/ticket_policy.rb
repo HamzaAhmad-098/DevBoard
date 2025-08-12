@@ -7,32 +7,33 @@ class TicketPolicy < ApplicationPolicy
         scope.where(developer_id: user.id)
       elsif user.qa?
         scope.where(qa_id: user.id)
-      else
+      else # regular user
         scope.where(creator_id: user.id)
       end
     end
   end
 
+  def index?
+    true
+  end
+
   def show?
-    user.admin? ||
-    record.creator_id == user.id ||
-    record.developer_id == user.id ||
-    record.qa_id == user.id
+    user.admin? || record.creator_id == user.id || record.developer_id == user.id || record.qa_id == user.id
   end
 
   def create?
-    user.admin? || user.qa? || user.developer?
+    user.user? || user.admin?
   end
 
   def update?
-    user.admin? || record.creator_id == user.id
-  end
-
-  def destroy?
-    user.admin?
+    user.admin? || (user.developer? && record.developer_id == user.id)
   end
 
   def verify?
     user.qa? || user.admin?
+  end
+
+  def destroy?
+    user.admin?
   end
 end
