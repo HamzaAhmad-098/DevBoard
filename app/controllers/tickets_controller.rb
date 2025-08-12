@@ -1,53 +1,67 @@
 class TicketsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_ticket, only: [:show, :edit, :update, :destroy, :verify]
+  before_action :set_ticket, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tickets = policy_scope(Ticket)
-  end
-
-  def show
-    authorize @ticket
+    # Show only relevant tickets for each role
+    case current_user.role
+    when "user"
+      @tickets = current_user.created_tickets
+    when "developer"
+      @tickets = current_user.developed_tickets
+    when "qa"
+      @tickets = current_user.qa_tickets
+    when "admin"
+      @tickets = Ticket.all
+    else
+      @tickets = []
+    end
   end
 
   def new
     @ticket = Ticket.new
-    authorize @ticket
   end
 
-  def create
-    @ticket = current_user.created_tickets.build(ticket_params)
-    authorize @ticket
-    if @ticket.save
-      redirect_to @ticket, notice: "Ticket was successfully created."
-    else
-      render :new
-    end
+def create
+  @ticket = Ticket.new(ticket_params)
+  @ticket.creator = current_user
+
+  # Force defaults for regular users
+  if current_user.user?
+    @ticket.status = :created  # or :created if you have that status
+    @ticket.developer_id = nil
+    @ticket.qa_id = nil
   end
 
-  def edit
-    authorize @ticket
+  if @ticket.save
+    redirect_to tickets_path, notice: "Ticket created successfully."
+  else
+    render :new, status: :unprocessable_entity
+  end
+end
+
+
+  def edit; end
+
+def update
+  if current_user.admin?
+    # Admin can update everything including status, developer_id, qa_id
+    permitted_params = params.require(:ticket).permit(:title, :description, :status, :developer_id, :qa_id)
+  else
+    # Other users can update only allowed fields (e.g. maybe just description)
+    permitted_params = params.require(:ticket).permit(:title, :description)
   end
 
-  def update
-    authorize @ticket
-    if @ticket.update(ticket_params)
-      redirect_to @ticket, notice: "Ticket was successfully updated."
-    else
-      render :edit
-    end
+  if @ticket.update(permitted_params)
+    redirect_to tickets_path, notice: "Ticket updated successfully."
+  else
+    render :edit, status: :unprocessable_entity
   end
+end
 
   def destroy
-    authorize @ticket
     @ticket.destroy
-    redirect_to tickets_path, notice: "Ticket deleted."
-  end
-
-  def verify
-    authorize @ticket, :verify?
-    @ticket.update(status: :done)
-    redirect_to tickets_path, notice: "Ticket verified."
+    redirect_to tickets_path, notice: "Ticket deleted successfully."
   end
 
   private
@@ -59,4 +73,15 @@ class TicketsController < ApplicationController
   def ticket_params
     params.require(:ticket).permit(:title, :description, :status, :developer_id, :qa_id)
   end
+  def verify
+  @ticket = Ticket.find(params[:id])
+  authorize @ticket, :verify?
+
+  if @ticket.update(status: :verified) # or whatever your verified status is called
+    redirect_to tickets_path, notice: "Ticket verified successfully."
+  else
+    redirect_to tickets_path, alert: "Failed to verify ticket."
+  end
+end
+
 end
