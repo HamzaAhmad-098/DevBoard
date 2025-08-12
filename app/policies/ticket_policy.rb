@@ -1,24 +1,6 @@
 class TicketPolicy < ApplicationPolicy
-  class Scope < Scope
-    def resolve
-      if user.admin?
-        scope.all
-      elsif user.developer?
-        scope.where(developer_id: user.id)
-      elsif user.qa?
-        scope.where(qa_id: user.id)
-      else # regular user
-        scope.where(creator_id: user.id)
-      end
-    end
-  end
-
   def index?
-    true
-  end
-
-  def show?
-    user.admin? || record.creator_id == user.id || record.developer_id == user.id || record.qa_id == user.id
+    user.admin? || user.user? || user.developer? || user.qa?
   end
 
   def create?
@@ -26,7 +8,7 @@ class TicketPolicy < ApplicationPolicy
   end
 
   def update?
-    user.admin? || (user.developer? && record.developer_id == user.id)
+    (user.developer? && record.developer_id == user.id) || user.admin?
   end
 
   def verify?
@@ -35,5 +17,19 @@ class TicketPolicy < ApplicationPolicy
 
   def destroy?
     user.admin?
+  end
+
+  class Scope < Scope
+    def resolve
+      if user.admin?
+        scope.all
+      elsif user.developer?
+        scope.where(developer_id: user.id)
+      elsif user.qa?
+        scope.where(qa_id: user.id)
+      else
+        scope.where(creator_id: user.id)
+      end
+    end
   end
 end
