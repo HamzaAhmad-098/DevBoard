@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [ :edit, :update, :show, :destroy ]
   def index
-    @users = User.all
+    @users = User.all.page(params[:user_page]).per(1)
   end
 
   def new

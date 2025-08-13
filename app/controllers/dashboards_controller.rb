@@ -2,17 +2,17 @@ class DashboardsController < ApplicationController
   before_action :authenticate_user!
   before_action :authorize_dashboard
 def admin
-  @users = User.all
-  @tickets = Ticket.all
+  @users = User.all.page(params[:user_page]).per(1)
+  @tickets = Ticket.all.page(params[:ticket_page]).per(1)
 end
 def developer
-  @tickets = Ticket.where(developer_id: current_user.id)
+  @tickets = Ticket.where(developer_id: current_user.id).page(params[:ticket_page]).per(1)
 end
 def qa
-  @tickets = Ticket.where(status: :ready_for_qa, qa_id: current_user.id)
+  @tickets = Ticket.where(status: :ready_for_qa, qa_id: current_user.id).page(params[:ticket_page]).per(1)
 end
 def user
-  @tickets = Ticket.where(creator_id: current_user.id)
+  @tickets = Ticket.where(creator_id: current_user.id).page(params[:ticket_page]).per(1)
 end
 
   private

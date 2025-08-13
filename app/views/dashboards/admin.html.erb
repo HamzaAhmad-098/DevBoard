@@ -1,8 +1,6 @@
 <% content_for :title, "Admin Dashboard" %>
 
 <h1 class="text-3xl font-bold mb-6">Manage All</h1>
-
-<!-- Users Section -->
 <div class="mb-6">
   <div class="flex justify-between items-center mb-2">
     <h2 class="text-xl font-bold">Users</h2>
@@ -35,8 +33,9 @@
     </tbody>
   </table>
 </div>
-
-<!-- Tickets Section -->
+  <div class="mt-4">
+    <%= render "pagination", records: @users, param_name: :user_page %>
+  </div>
 <div>
   <div class="flex justify-between items-center mb-2">
     <h2 class="text-xl font-bold">Tickets</h2>
@@ -58,3 +57,6 @@
     <% end %>
   </div>
 </div>
+  <div class="mt-4">
+    <%= render "pagination", records: @tickets, param_name: :ticket_page %>
+  </div>

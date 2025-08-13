@@ -5,13 +5,13 @@ class TicketsController < ApplicationController
   def index
     case current_user.role
     when "user"
-      @tickets = current_user.created_tickets
+      @tickets = current_user.created_tickets.page(params[:ticket_page]).per(1)
     when "developer"
-      @tickets = current_user.developed_tickets
+      @tickets = current_user.developed_tickets.page(params[:ticket_page]).per(1)
     when "qa"
-      @tickets = current_user.qa_tickets.where(status: :ready_for_qa)
+      @tickets = current_user.qa_tickets.where(status: :ready_for_qa).page(params[:ticket_page]).per(1)
     when "admin"
-      @tickets = Ticket.all
+      @tickets = Ticket.all.page(params[:ticket_page]).per(1)
     else
       @tickets = []
     end
