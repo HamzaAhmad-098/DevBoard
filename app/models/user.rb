@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   enum role: { user: 0, developer: 1, qa: 2, admin: 3 }
 
-  has_many :created_tickets, foreign_key: "creator",class_name: "Ticket"
+  has_many :created_tickets, foreign_key: "creator", class_name: "Ticket"
   has_many :developed_tickets, foreign_key: "developer", class_name: "Ticket"
   has_many :qa_tickets, foreign_key: "qa", class_name: "Ticket"
 

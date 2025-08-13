@@ -1,7 +1,6 @@
 class TicketsController < ApplicationController
-
   before_action :authenticate_user!
-  before_action :set_ticket, only: [:show, :edit, :update, :destroy]
+  before_action :set_ticket, only: [ :show, :edit, :update, :destroy ]
 
   def index
     case current_user.role
@@ -24,7 +23,7 @@ class TicketsController < ApplicationController
    @ticket = Ticket.new(ticket_params)
    @ticket.creator = current_user
   if current_user.user?
-    @ticket.status = :created 
+    @ticket.status = :created
     @ticket.developer_id = nil
     @ticket.qa_id = nil
   end
@@ -41,9 +40,9 @@ def update
   if current_user.admin?
     permitted_params = params.require(:ticket).permit(:title, :description, :status, :developer_id, :qa_id)
   elsif current_user.developer?
-    permitted_params = params.require(:ticket).permit(:title ,:description , :status , :qa)
+    permitted_params = params.require(:ticket).permit(:title, :description, :status, :qa)
   elsif current_user.qa?
-    permitted_params = params.require(:ticket).permit(:title ,:description , :status )
+    permitted_params = params.require(:ticket).permit(:title, :description, :status)
   else
     permitted_params = params.require(:ticket).permit(:title, :description)
   end
@@ -84,4 +83,3 @@ def after_ticket_update_path
   end
 end
 end
-

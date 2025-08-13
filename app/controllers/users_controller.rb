@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
-  
-  before_action :set_user, only: [:edit, :update, :show, :destroy]
+  before_action :set_user, only: [ :edit, :update, :show, :destroy ]
   def index
     @users = User.all
   end
@@ -45,7 +44,7 @@ end
   def user_params
     params.require(:user).permit(:name, :email, :role, :password, :password_confirmation)
   end
-  
+
   def require_admin
     redirect_to root_path, alert: "Access denied" unless current_user.admin?
   end
