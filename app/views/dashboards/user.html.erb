@@ -10,6 +10,7 @@
       </div>
       <div>
         <%= link_to "View", ticket, class: "bg-gray-600 px-3 py-1 rounded hover:bg-gray-500" %>
+        <%= link_to "Add Comment", new_ticket_comment_path(ticket), class: "bg-blue-600 px-3 py-1 rounded hover:bg-blue-500 text-white" %>
       </div>
     </div>
   <% end %>

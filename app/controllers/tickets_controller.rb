@@ -70,16 +70,16 @@ end
   end
 private
 
-def after_ticket_update_path
-  case current_user.role
-  when "admin"
-    admin_dashboard_path
-  when "developer"
-    developer_dashboard_path
-  when "qa"
-    qa_dashboard_path
-  else
-    user_dashboard_path
+  def after_ticket_update_path
+    case current_user.role
+    when "admin"
+      admin_dashboard_path
+    when "developer"
+      developer_dashboard_path
+    when "qa"
+      qa_dashboard_path
+    else
+      user_dashboard_path
+    end
   end
-end
 end

@@ -1,0 +1,41 @@
+<h1 class="text-2xl font-bold mb-4">Comments for <%= @ticket.title %></h1>
+
+<% if @comments.any? %>
+  <table class="w-full mb-6 bg-gray-800 rounded>
+    <thead class="bg-gray-100">
+      <tr>
+        <th class="px-4 py-2 text-left text-White-700">User</th>
+        <th class="px-4 py-2 text-left text-white-700">Comment</th>
+        <th class="px-4 py-2 text-left text-white-700">Created At</th>
+        <th class="px-4 py-2 text-right text-white-700">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="bg-gray-800 divide-y divide-gray-200">
+      <% @comments.each do |comment| %>
+        <tr>
+          <td class="px-4 py-2"><%= comment.user.name %></td>
+          <td class="px-4 py-2"><%= comment.body %></td>
+          <td class="px-4 py-2"><%= comment.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+          <td class="px-4 py-2 text-right">
+            <% if comment.user_id == current_user.id || current_user.admin? %>
+            <div class="flex space-x-2">
+              <%= link_to "Edit", edit_ticket_comment_path(@ticket, comment), 
+                          class: "text-white rounded-md px-3 py-1 bg-yellow-600 hover:bg-yellow-500 font-medium inline-block" %>
+              <%= button_to "Delete", ticket_comment_path(@ticket, comment),
+                            method: :delete,
+                            data: { turbo_confirm: "Are you sure?" },
+                            class: "text-white rounded-md px-3 py-1 bg-red-600 hover:bg-red-500 font-medium inline-block" %>
+            </div>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="text-gray-500">No comments yet.</p>
+<% end %>
+
+<div class="mt-4">
+  <%= link_to "Add Comment", new_ticket_comment_path(@ticket), class: "bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500 font-medium" %>
+</div>

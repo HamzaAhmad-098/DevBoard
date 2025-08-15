@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
   before_action :authenticate_user!, unless: :devise_controller?
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorize
 
   private
   def user_not_authorized
@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   end
   protected
   def after_sign_in_path_for(resource)
-    case current_user.role
+    case resource.role
     when "user"
       user_dashboard_path
     when "developer"
