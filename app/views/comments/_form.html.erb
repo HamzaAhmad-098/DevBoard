@@ -1,0 +1,23 @@
+<%= form_with(model:  [@ticket, @comment], local: true) do |f| %>
+  <% if @comment.errors.any? %>
+    <div class="bg-red-100 p-3 rounded">
+      <h2 class="text-red-700 font-bold"><%= pluralize(@comment.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <ul class="list-disc ml-6 text-red-600">
+        <% @comment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-4">
+    <%= f.label :Comment %>
+    <%= f.text_field :body , class: "w-full rounded border-gray-300 p-2" %>
+  </div>
+  <%= f.hidden_field :ticket_id %>
+  <%= f.hidden_field :user_id %>
+
+  <div>
+    <%= f.submit class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500" %>
+  </div>
+<% end %>

@@ -4,6 +4,7 @@ class Ticket < ApplicationRecord
   belongs_to :creator, class_name: "User"
   belongs_to :developer, class_name: "User", optional: true
   belongs_to :qa, class_name: "User", optional: true
+  has_many :comments, dependent: :destroy
 
   validates :title, presence: true
   validates :status, presence: true
