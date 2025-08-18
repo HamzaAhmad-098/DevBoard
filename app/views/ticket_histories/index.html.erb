@@ -1,0 +1,29 @@
+<h1>
+  <% if @ticket %>
+    History for Ticket: <%= @ticket.title %>
+  <% else %>
+    All Ticket Histories
+  <% end %>
+</h1>
+<table class="w-full mb-6 bg-gray-800 rounded">
+  <tr class="bg-gray-700">
+    <th class = "p-2 text-left">ID</th>
+    <th class="p-2">Ticket</th>
+    <th class="p-2">User</th>
+    <th class="p-2">Action</th>
+    <th class="p-2">Old Value</th>
+    <th class="p-2">New Value</th>
+    <th class="p-2">Time</th>
+  </tr>
+  <% @ticket_histories.each do |history| %>
+    <tr>
+      <td class="p-2"><%= history.id %></td>
+      <td class="p-2"><%= history.ticket.title %></td>
+      <td class="p-2"><%= history.user.name %></td>
+      <td class="p-2"><%= history.action %></td>
+      <td class="p-2"><%= history.old_value %></td>
+      <td class="p-2"><%= history.new_value %></td>
+      <td class="p-2"><%= history.created_at %></td>
+    </tr>
+  <% end %>
+</table>

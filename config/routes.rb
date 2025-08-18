@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
+  resources :ticket_histories, only: [:index]
   devise_for :users
-unauthenticated :user do
-  root to: "devise/sessions#new", as: :unauthenticated_root
-end
-authenticated :user do
-  root to: "dashboards#user", as: :authenticated_root
-end
+  unauthenticated :user do
+    root to: "devise/sessions#new", as: :unauthenticated_root
+  end
+  authenticated :user do
+    root to: "dashboards#user", as: :authenticated_root
+  end
   get "dashboard/user", to: "dashboards#user", as: :user_dashboard
   get "dashboard/developer", to: "dashboards#developer", as: :developer_dashboard
   get "dashboard/qa", to: "dashboards#qa", as: :qa_dashboard
@@ -13,6 +14,7 @@ end
 
   resources :tickets do
     resources :comments
+    resources :ticket_histories, only: [:index]
   end
   resources :users
   root "home#index"
