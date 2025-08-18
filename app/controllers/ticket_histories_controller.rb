@@ -1,7 +1,7 @@
 class TicketHistoriesController < ApplicationController
   before_action :authenticate_user!
   before_action :require_admin!
-  before_action :set_ticket, only: [:index]
+  before_action :set_ticket, only: [ :index ]
   def index
     if @ticket
       @ticket_histories = @ticket.ticket_histories.includes(:user).order(created_at: :desc)
@@ -10,8 +10,8 @@ class TicketHistoriesController < ApplicationController
     end
   end
 
-  private 
-  
+  private
+
   def set_ticket
     @ticket = Ticket.find(params[:ticket_id]) if params[:ticket_id]
   end

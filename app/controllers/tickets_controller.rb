@@ -51,7 +51,7 @@ def update
   if @ticket.update(permitted_params)
     @ticket.previous_changes.each do |attribute, values|
     old_val, new_val = values
-    next if ["updated_at", "created_at"].include?(attribute)
+    next if [ "updated_at", "created_at" ].include?(attribute)
       TicketHistory.create!(
         ticket: @ticket,
         user: current_user,
@@ -59,7 +59,7 @@ def update
         old_value: old_val,
         new_value: new_val
       )
-    end 
+    end
     redirect_to after_ticket_update_path, notice: "Ticket updated successfully."
   else
     render :edit, status: :unprocessable_entity

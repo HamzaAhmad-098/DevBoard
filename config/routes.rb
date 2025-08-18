@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :ticket_histories, only: [:index]
+  resources :ticket_histories, only: [ :index ]
   devise_for :users
   unauthenticated :user do
     root to: "devise/sessions#new", as: :unauthenticated_root
@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   resources :tickets do
     resources :comments
-    resources :ticket_histories, only: [:index]
+    resources :ticket_histories, only: [ :index ]
   end
   resources :users
   root "home#index"
