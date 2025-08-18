@@ -1,0 +1,19 @@
+<div class="bg-gray-900 rounded shadow p-6 space-y-4 text-gray-100">
+  <h2 class="text-2xl font-bold text-white"><%= ticket.title %></h2>
+  <p><strong class="text-gray-300">Description:</strong></p>
+  <p class="whitespace-pre-wrap text-gray-300"><%= ticket.description %></p>
+  <p><strong class="text-gray-300">Status:</strong> <span class="text-indigo-400"><%= ticket.status.humanize %></span></p>
+  <p><strong class="text-gray-300">Creator:</strong> <%= ticket.creator.name %></p>
+  <% if ticket.developer.present? %>
+    <p><strong class="text-gray-300">Developer:</strong> <%= ticket.developer.name %></p>
+  <% else %>
+    <p><strong class="text-gray-300">Developer:</strong> <span class="italic text-gray-500">Not assigned</span></p>
+  <% end %>
+  <% if ticket.qa.present? %>
+    <p><strong class="text-gray-300">QA:</strong> <%= ticket.qa.name %></p>
+  <% else %>
+    <p><strong class="text-gray-300">QA:</strong> <span class="italic text-gray-500">Not assigned</span></p>
+  <% end %>
+  <p><strong class="text-gray-300">Created at:</strong> <%= ticket.created_at.strftime("%b %d, %Y %I:%M %p") %></p>
+  <p><strong class="text-gray-300">Updated at:</strong> <%= ticket.updated_at.strftime("%b %d, %Y %I:%M %p") %></p>
+</div>

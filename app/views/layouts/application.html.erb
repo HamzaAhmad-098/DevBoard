@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" class="dark">
   <head>
     <title><%= content_for(:title) || "Rails Test Project" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -10,29 +10,42 @@
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-<%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body>
-  
-  <% if notice %>
-     <p class="notice"><%= notice %></p>
-  <% end %>
-  <% if alert %>
-     <p class="alert"><%= alert %></p>
-  <% end %>
+  <body class="bg-gray-900 text-gray-200 min-h-screen">
+    <nav class="bg-gray-800 p-4 flex justify-between items-center">
+      <div class="text-lg font-bold">Rails Test Project</div>
+      <div class="space-x-4 flex items-center">
+        <% if user_signed_in? %>
+          <span class="text-gray-300">Hello, <%= current_user.name %></span>
+          <%= button_to "Logout", destroy_user_session_path,
+                method: :delete,
+                class: "bg-red-600 hover:bg-red-500 px-4 py-2 rounded text-white",
+                form: { data: { turbo: false } } %>
+        <% else %>
+          <%= link_to "Login", new_user_session_path, class: "text-gray-300 hover:text-white" %>
+          <%= link_to "Sign up", new_user_registration_path, class: "text-gray-300 hover:text-white" %>
+        <% end %>
+      </div>
+    </nav>
 
-    <%= yield %>
+    <% if notice %>
+      <p class="bg-green-600 text-white p-2"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+      <p class="bg-red-600 text-white p-2"><%= alert %></p>
+    <% end %>
+
+    <main class="p-6">
+      <%= yield %>
+    </main>
   </body>
 </html>

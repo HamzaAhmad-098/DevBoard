@@ -1,0 +1,39 @@
+<% if records.respond_to?(:total_pages) && records.total_pages > 1 %>
+  <nav class="flex justify-center mt-6" aria-label="Pagination">
+    <ul class="inline-flex items-center -space-x-px">
+      
+      <% safe_params = params.to_unsafe_h %> 
+
+      <% if records.current_page > 1 %>
+        <li>
+          <%= link_to "Prev", url_for(safe_params.merge(param_name => records.current_page - 1)),
+              class: "px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700" %>
+        </li>
+      <% end %>
+
+      <% (1..records.total_pages).each do |page| %>
+        <% if page == records.current_page %>
+          <li>
+            <span class="px-3 py-2 text-blue-600 border border-gray-300 bg-blue-50">
+              <%= page %>
+            </span>
+          </li>
+        <% else %>
+          <li>
+            <%= link_to page, url_for(safe_params.merge(param_name => page)),
+                class: "px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700" %>
+          </li>
+        <% end %>
+      <% end %>
+
+   
+      <% if records.current_page < records.total_pages %>
+        <li>
+          <%= link_to "Next", url_for(safe_params.merge(param_name => records.current_page + 1)),
+              class: "px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700" %>
+        </li>
+      <% end %>
+
+    </ul>
+  </nav>
+<% end %>

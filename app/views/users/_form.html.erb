@@ -1,0 +1,41 @@
+<%= form_with(model: @user, local: true) do |f| %>
+  <% if @user.errors.any? %>
+    <div class="bg-red-100 p-3 rounded">
+      <h2 class="text-red-700 font-bold"><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <ul class="list-disc ml-6 text-red-600">
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-4">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "w-full rounded border-gray-300 p-2" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :email %>
+    <%= f.email_field :email, class: "w-full rounded border-gray-300 p-2" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :role %>
+    <%= f.select :role, User.roles.keys.map { |r| [r.humanize, r] }, {}, class: "w-full rounded border-gray-300 p-2" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :password %>
+    <%= f.password_field :password, class: "w-full rounded border-gray-300 p-2" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation, class: "w-full rounded border-gray-300 p-2" %>
+  </div>
+
+  <div>
+    <%= f.submit class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500" %>
+  </div>
+<% end %>

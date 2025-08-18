@@ -29,6 +29,7 @@ gem "solid_queue"
 gem "solid_cable"
 gem "devise"
 gem "tailwindcss-rails"
+gem "kaminari"
 
 
 # Reduces boot times through caching; required in config/boot.rb
@@ -66,3 +67,5 @@ group :test do
 end
 
 gem "jsbundling-rails", "~> 1.3"
+
+gem "pundit", "~> 2.5"

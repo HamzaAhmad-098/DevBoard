@@ -1,0 +1,45 @@
+<%= form_with(model: @ticket, local: true, class: "space-y-4") do |form| %>
+  <% if @ticket.errors.any? %>
+    <div class="bg-red-100 p-3 rounded">
+      <h2 class="text-red-700 font-bold"><%= pluralize(@ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
+      <ul class="list-disc ml-6 text-red-600">
+        <% @ticket.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :title, class: "block text-gray-300" %>
+    <%= form.text_field :title, class: "w-full rounded border-gray-700 bg-gray-800 text-white" %>
+  </div>
+
+  <div>
+    <%= form.label :description, class: "block text-gray-300" %>
+    <%= form.text_area :description, rows: 5, class: "w-full rounded border-gray-700 bg-gray-800 text-white" %>
+  </div>
+
+  <% unless current_user.user? %>
+    <div>
+      <%= form.label :status, class: "block text-gray-300" %>
+      <%= form.select :status, Ticket.statuses.keys.map { |s| [s.humanize, s] }, {}, class: "w-full rounded border-gray-700 bg-gray-800 text-white" %>
+    </div>
+    <% if current_user.admin? %>
+    <div>
+      <%= form.label :developer_id, "Assign Developer", class: "block text-gray-300" %>
+      <%= form.collection_select :developer_id, User.developer, :id, :name, include_blank: true, class: "w-full rounded border-gray-700 bg-gray-800 text-white" %>
+    </div>
+    <% end %>
+    <% if current_user.admin? || current_user.developer? %>
+    <div>
+      <%= form.label :qa_id, "Assign QA", class: "block text-gray-300" %>
+      <%= form.collection_select :qa_id, User.qa, :id, :name, include_blank: true, class: "w-full rounded border-gray-700 bg-gray-800 text-white" %>
+    </div>
+    <% end %>
+  <% end %>
+
+  <div>
+    <%= form.submit class: "bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded" %>
+  </div>
+<% end %>
