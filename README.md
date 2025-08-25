@@ -3,7 +3,7 @@
 ![Ruby](https://img.shields.io/badge/Ruby-3.1%2B-red?logo=ruby)
 ![Rails](https://img.shields.io/badge/Rails-7.0-red?logo=rubyonrails)
 ![Postgres](https://img.shields.io/badge/PostgreSQL-14-blue?logo=postgresql)
-![License](https://img.shields.io/badge/License-MIT-green)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE.md)
 
 A simplified **ticket tracking system** inspired by Jira, built with **Ruby on Rails 7**.  
 The app supports **user authentication, role-based authorization, ticket workflows, comments, and ticket history tracking**.  
@@ -40,7 +40,8 @@ The goal of this project was to implement a **basic Jira-like system** with mult
   - Create, assign, and update tickets  
   - Add **comments** to each ticket  
   - Maintain **complete ticket history** (visible to Admins)  
-
+-**Comments Management**
+  - Create , Edit and Destroy comments According to roles
 - **Admin Panel**  
   - CRUD operations for **users** and **tickets**  
   - View all ticket activities and histories  
@@ -102,3 +103,12 @@ The goal of this project was to implement a **basic Jira-like system** with mult
 - Built with Rails 7, Ruby 3+, PostgreSQL, Devise, Pundit
 - Focused on simplicity and clarity over complexity
 - Can be extended with features like labels, attachments, or notifications
+# 📫 Contact
+- I'm open to internships , remote jobs , freelance projects, or tech collaboration.
+- Hamza Ahmad
+🔗 GitHub: HamzaAhmad-098
+- 📧 Email: [jhajji1223@gmail.com](mailto:jhajji1223@gmail.com)
+- 🌐 Portfolio: [https://portfolio.hamzaxdevelopers.dpdns.org](https://portfolio.hamzaxdevelopers.dpdns.org) 
+
+# ⭐️ Support
+If you like this project or learned something, please consider giving a ⭐️ on the repository!
