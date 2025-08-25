@@ -7,6 +7,7 @@ class Ticket < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :ticket_histories
 
+
   validates :title, presence: true
   validates :status, presence: true
 end
