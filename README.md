@@ -57,18 +57,17 @@ The goal of this project was to implement a **basic Jira-like system** with mult
    ```
 2. **Install Dependencies**
    ```bash
-   bundle install
+   bundle install 
    yarn install
-  ```
+   ```
 3. **Setup Database**
    ```bash
    rails db:create db:migrate db:seed
-  ```
-
+   ```
 4. **Run the Server**
    ```bash
-  bin/dev
-  ```
+   bin/dev
+   ```
 5. Open in browser: http://localhost:3000
    
 # 🌱 Seed Data
