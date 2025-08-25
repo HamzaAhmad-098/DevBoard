@@ -1,24 +1,56 @@
-# README
+# 📝 Basic Jira Clone in Rails 7
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+![Ruby](https://img.shields.io/badge/Ruby-3.1%2B-red?logo=ruby)
+![Rails](https://img.shields.io/badge/Rails-7.0-red?logo=rubyonrails)
+![Postgres](https://img.shields.io/badge/PostgreSQL-14-blue?logo=postgresql)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Tests](https://img.shields.io/badge/Tests-RSpec-orange?logo=testing-library)
 
-Things you may want to cover:
+A simplified **ticket tracking system** inspired by Jira, built with **Ruby on Rails 7**.  
+The app supports **user authentication, role-based authorization, ticket workflows, comments, and ticket history tracking**.  
 
-* Ruby version
+---
 
-* System dependencies
+## 🎯 Goal
 
-* Configuration
+The goal of this project was to implement a **basic Jira-like system** with multiple user roles, ticket management, and workflow transitions — while ensuring clean, maintainable Rails code.
 
-* Database creation
+---
 
-* Database initialization
+## 🚀 Features
 
-* How to run the test suite
+- **Authentication** (Devise)  
+  - Sign up, log in, log out functionality  
 
-* Services (job queues, cache servers, search engines, etc.)
+- **Authorization** (Pundit)  
+  - Role-based access control:
+    - **Regular User** → Can create tickets and view only their own  
+    - **Developer** → Can view assigned tickets and update their status  
+    - **QA** → Can verify tickets and mark them as done  
+    - **Admin** → Full access (manage all users & tickets)  
 
-* Deployment instructions
+- **Ticket Workflow**  
+  - Stages:  
+    1. Created  
+    2. Assigned to Developer  
+    3. In Progress  
+    4. Sent to QA  
+    5. Marked Done  
 
-* ...
+- **Ticket Management**  
+  - Create, assign, and update tickets  
+  - Add **comments** to each ticket  
+  - Maintain **complete ticket history** (visible to Admins)  
+
+- **Admin Panel**  
+  - CRUD operations for **users** and **tickets**  
+  - View all ticket activities and histories  
+
+---
+
+## ⚙️ Setup Instructions
+
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/your-username/rails-jira-clone.git
+   cd rails-jira-clone
