@@ -56,17 +56,17 @@ The goal of this project was to implement a **basic Jira-like system** with mult
    cd rails-jira-clone
    ```
 2. **Install Dependencies**
-  ```bash
+   ```bash
    bundle install
    yarn install
   ```
 3. **Setup Database**
-  ```bash
+   ```bash
    rails db:create db:migrate db:seed
   ```
 
 4. **Run the Server**
-  ```bash
+   ```bash
   bin/dev
   ```
 5. Open in browser: http://localhost:3000
