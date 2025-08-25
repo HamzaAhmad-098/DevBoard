@@ -77,3 +77,15 @@ The goal of this project was to implement a **basic Jira-like system** with mult
   - Developer: dev@example.com / password
   - QA: qa@example.com / password
   - User: user@example.com / password
+  - Complete DB sample data to check DB structure
+# 🏗️ Design Decisions
+- **Models**
+  - User → with roles (admin, developer, qa, user)
+  - Ticket → title, description, status, assigned user, history tracking
+  - Comment → associated with tickets & users
+  - TicketHistory → stores changes in status & assignments
+- **Roles & Permissions**
+  - Implemented using Pundit for clarity and maintainability.
+- **Workflow**
+  - Managed via enum statuses in Ticket model
+  - Transitions are controlled by roles & policies
