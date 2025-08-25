@@ -56,18 +56,24 @@ The goal of this project was to implement a **basic Jira-like system** with mult
    cd rails-jira-clone
    ```
 2. **Install Dependencies**
-```bash
+  ```bash
    bundle install
    yarn install
-```
+  ```
 3. **Setup Database**
-```bash
+  ```bash
    rails db:create db:migrate db:seed
-```
+  ```
 
 4. **Run the Server**
-```bash
+  ```bash
   bin/dev
-```
-
-Open in browser: http://localhost:3000
+  ```
+5. Open in browser: http://localhost:3000
+   
+# 🌱 Seed Data
+  The project includes seed data with predefined roles and users:
+  - Admin: admin@example.com / password
+  - Developer: dev@example.com / password
+  - QA: qa@example.com / password
+  - User: user@example.com / password
