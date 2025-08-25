@@ -4,7 +4,6 @@
 ![Rails](https://img.shields.io/badge/Rails-7.0-red?logo=rubyonrails)
 ![Postgres](https://img.shields.io/badge/PostgreSQL-14-blue?logo=postgresql)
 ![License](https://img.shields.io/badge/License-MIT-green)
-![Tests](https://img.shields.io/badge/Tests-RSpec-orange?logo=testing-library)
 
 A simplified **ticket tracking system** inspired by Jira, built with **Ruby on Rails 7**.  
 The app supports **user authentication, role-based authorization, ticket workflows, comments, and ticket history tracking**.  
@@ -88,3 +87,18 @@ The goal of this project was to implement a **basic Jira-like system** with mult
 - **Workflow**
   - Managed via enum statuses in Ticket model
   - Transitions are controlled by roles & policies
+# 🔄 Example User Flows
+- **Ticket Creation (User)**
+  - User logs in → Creates a ticket → Ticket starts with status Created.
+- **Ticket Assignment (Admin)**
+  - Admin assigns the ticket to a Developer.
+- **Developer Progress**
+  - Developer updates ticket status to In Progress → Later sends to QA.
+- **QA Verification**
+  - QA verifies the work → Marks ticket as Done.
+- **Comments & History**
+  - Users and assignees add comments → Admin can view full ticket history.
+# 📌 Notes
+- Built with Rails 7, Ruby 3+, PostgreSQL, Devise, Pundit
+- Focused on simplicity and clarity over complexity
+- Can be extended with features like labels, attachments, or notifications
