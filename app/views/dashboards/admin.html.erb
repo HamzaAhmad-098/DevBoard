@@ -61,3 +61,6 @@
   <div class="mt-4">
     <%= render "pagination", records: @tickets, param_name: :ticket_page %>
   </div>
+  <div>
+    <%= link_to "All Ticket Histories", ticket_histories_path , class: "bg-blue-600 px-3 py-1 rounded hover:bg-blue-500 text-white" %>
+  </div>

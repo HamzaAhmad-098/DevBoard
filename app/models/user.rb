@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :created_tickets, foreign_key: "creator", class_name: "Ticket"
   has_many :developed_tickets, foreign_key: "developer", class_name: "Ticket"
   has_many :qa_tickets, foreign_key: "qa", class_name: "Ticket"
+  has_many :ticket_histories
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true

@@ -47,7 +47,19 @@ def update
     permitted_params = params.require(:ticket).permit(:title, :description)
   end
 
+  old_attributes = @ticket.attributes.slice("status")
   if @ticket.update(permitted_params)
+    @ticket.previous_changes.each do |attribute, values|
+    old_val, new_val = values
+    next if [ "updated_at", "created_at" ].include?(attribute)
+      TicketHistory.create!(
+        ticket: @ticket,
+        user: current_user,
+        action: "update",
+        old_value: old_val,
+        new_value: new_val
+      )
+    end
     redirect_to after_ticket_update_path, notice: "Ticket updated successfully."
   else
     render :edit, status: :unprocessable_entity
