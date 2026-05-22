@@ -108,7 +108,7 @@ The goal of this project was to implement a **basic Jira-like system** with mult
 - Hamza Ahmad
 🔗 GitHub: HamzaAhmad-098
 - 📧 Email: [HamzaxDevelopers](mailto:hamzaxdevelopers1223@gmail.com)
-- 🌐 Portfolio: [https://portfolio.hamzaxdevelopers.dpdns.org](https://portfolio.hamzaxdevelopers.dpdns.org) 
+- 🌐 Portfolio: [https://hamzaahmad-098.github.io/Portfolio/](https://hamzaahmad-098.github.io/Portfolio/) 
 
 # ⭐️ Support
 If you like this project or learned something, please consider giving a ⭐️ on the repository!
